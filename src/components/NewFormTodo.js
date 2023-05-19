@@ -29,7 +29,7 @@ function NewFormTodo({ todo }) {
                 <form onSubmit={onSubmitHandle} className="login-form" >
                 <h2>To Do</h2>
                 <label htmlFor="username">Write down your To do List:</label>
-                <input onChange={onHandleChange} type="text" value={item}/>
+                <input id="username" onChange={onHandleChange} type="text" value={item}/>
                 <button  type="submit">Add</button>
                 </form>
              </>
