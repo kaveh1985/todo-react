@@ -1,39 +1,39 @@
-import { useState } from "react";
-
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 function NewFormTodo({ todo }) {
-    const [item, setItem] = useState("");
-    const [inputChecker, setInputChecker] = useState(true)
+  const validateForm = (values) => {
+    const errors = {};
 
-    const onHandleChange = (event) => {
-        const value = event.target.value;
-        if(value) setInputChecker(false)
-        setItem(value)
+    if (!values.item) {
+      errors.item = 'The field is empty';
     }
 
+    return errors;
+  };
 
-    const onSubmitHandle = (event) => { 
-       event.preventDefault();
-       if(inputChecker) {
-           alert('The field is empty')
-           return;
-       }
-        todo(item)
-        setItem("")
-        setInputChecker(true)
-     }; 
+  const handleSubmit = (values, { resetForm }) => {
+    if (Object.keys(validateForm(values)).length === 0) {
+        // the todo method is passed from the parent(App) to get the value from the form
+      todo(values.item);
+      resetForm();
+    }
+  };
 
-     
-     return (
-            <>
-                <form onSubmit={onSubmitHandle} className="login-form" >
-                <h2>To Do</h2>
-                <label htmlFor="username">Write down your To do List:</label>
-                <input id="username" onChange={onHandleChange} type="text" value={item}/>
-                <button  type="submit">Add</button>
-                </form>
-             </>
-         )
+  return (
+    <Formik
+      initialValues={{ item: '' }}
+      validate={validateForm}
+      onSubmit={handleSubmit}
+    >
+      <Form className="login-form">
+        <h2>To Do</h2>
+        <label htmlFor="item">Write down your To Do List:</label>
+        <Field type="text" id="item" name="item" />
+        <ErrorMessage name="item" component="div" className="error" />
+        <button type="submit">Add</button>
+      </Form>
+    </Formik>
+  );
 }
 
 export default NewFormTodo;
