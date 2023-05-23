@@ -28,7 +28,7 @@ function NewFormTodo({ todo }) {
       <Form className="login-form">
         <h2>To Do</h2>
         <label htmlFor="item">Write down your To Do List:</label>
-        <Field type="text" id="item" name="item" />
+        <Field type="text" id="item" name="item" autoFocus onBlur={() => {}}/>
         <ErrorMessage name="item" component="div" className="error" />
         <button type="submit">Add</button>
       </Form>
